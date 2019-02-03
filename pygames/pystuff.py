@@ -7,8 +7,8 @@ SCREEN_SIZE = (500, 480)
 pygame.init()
 
 screen = pygame.display.set_mode(SCREEN_SIZE, pygame.NOFRAME)
-screen_center = (SCREEN_SIZE[0] / 2, SCREEN_SIZE[1]/2)
-screen.fill((0, 0, 0))
+#screen_center = (SCREEN_SIZE[0] / 2, SCREEN_SIZE[1]/2)
+
 
 
 #Images pb = pygame.display.set_mode((500, 480))
@@ -41,7 +41,7 @@ class Button():
 
     def get_event(self, event):
         #if self.rect.collidepoint(event.pos):
-        screen.fill((255, 255, 255))
+        #screen.fill((255, 255, 255))
         pygame.display.update()
         self.callback()
 
@@ -50,34 +50,42 @@ class Button():
 
 
 def create_button():
-    newwindow = Window(screen, (0, 0), SCREEN_SIZE)
-    newbutton = Button(newwindow, (100, 250), (100, 50), pygame.Color('Pink'), test_button_event)
+    newwindow = Window(screen, (10, 10), SCREEN_SIZE)
+    newbutton = Button(newwindow, (150, 250), (100, 50), pygame.Color('Pink'), test_button_event)
     buttons.append(newbutton)
     newbutton.draw()
 
 def test_button_event():
-    print("Hello")
+    screen.blit(logo, (10, 0))
+    screen.fill((255, 255, 255))
+    pygame.display.flip()
 
+#Main Loop
 create_button()
 
-while True:
-    for event in pygame.event.get():
-        screen = pygame.display.set_mode(SCREEN_SIZE, 32)
-        screen.fill((0, 0, 0))
-        screen.blit(bg, (0, 0))
-        screen.blit(logo, (10, 0))
-        screen.blit(snap, (10, 190))
-        screen.blit(setup, (470, 470))
-        for button in buttons:
-            button.draw()
 
+
+while True:
+
+    screen = pygame.display.set_mode(SCREEN_SIZE, 32)
+    # screen.fill((255, 255, 255))
+    # screen.blit(bg, (0, 0))
+    # screen.blit(logo, (10, 0))
+    screen.blit(snap, (10, 190))
+    screen.blit(setup, (470, 470))
+    for button in buttons:
+        button.draw()
+
+    for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
             exit(0)
 
-        if event.type == MOUSEBUTTONDOWN:
-            print("mouse at (%d, %d)" % event.pos)
-            #screen.fill(255, 255, 255)
-            button.get_event(event)
+    mouse = pygame.mouse.get_pos()
 
-        pygame.display.update()
+    if event.type == MOUSEBUTTONDOWN and 150+100 > mouse[0] > 150 and 250+50 > mouse[1] > 250:
+
+        print("mouse at (%d, %d)" % event.pos)
+        button.get_event(event)
+
+    pygame.display.update()

@@ -5,6 +5,7 @@
       <option name="ignoredIdentifiers">
         <list>
           <option value="pgame.Rect" />
+          <option value="pgame.self" />
         </list>
       </option>
     </inspection_tool>

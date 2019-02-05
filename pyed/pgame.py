@@ -1,7 +1,7 @@
 from sys import exit
 import pygame
 from pygame.locals import *
-#import time
+import time
 import random
 
 pygame.init()
@@ -12,41 +12,66 @@ SCREEN_SIZE = (800, 600)
 #Initializing screen with no caption
 pgDisplay = pygame.display.set_mode(SCREEN_SIZE, pygame.NOFRAME)
 pgDisplay1 = pygame.display.set_mode(SCREEN_SIZE, pygame.NOFRAME)
-#clock = pygame.time.Clock()
+pgDisplay2 = pygame.display.set_mode(SCREEN_SIZE, pygame.NOFRAME)
+clock = pygame.time.Clock()
 buttons = []
 
+#Variables
 myfont = pygame.font.SysFont('Comic Sans MS', 50)
-title = myfont.render('P-Pie!', True, (0, 0, 0))
+title = myfont.render('Photo Booth!', True, (0, 0, 0))
+startcam = myfont.render('Press to Start!', True, (0, 0, 0))
+pose = myfont.render('STRIKE A POSE!', True, (0, 0, 0))
+img3 = myfont.render('3', True, (0, 0, 0))
+img2 = myfont.render('2', True, (0, 0, 0))
+img1 = myfont.render('1', True, (0, 0, 0))
 
 #Colors
 green = (0, 125, 0)
 
-class Window():
-    def __init__(self, screen, position, size):
-        self.screen = screen
-        self.rect = Rect(position, size)
+def photo_loop():
 
+    ploop = True
 
-class Button():
-    def __init__(self, parent, position, size, color):
-        self.parent = parent
-        self.position = position
-        self.size = size
-        self.color = color
+    while ploop:
+        for event in pygame.event.get():
+            print(event)
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
 
-    def get_event(selfs, event):
-        pgDisplay.fill(125, 125, 125)
+        pgDisplay2.fill((255, 255, 255))
+        pygame.display.flip()
+        time.sleep(1)
+
+        pgDisplay2.fill((255, 255, 255))
+        pgDisplay2.blit(pose, (200, 250))
+        pygame.display.flip()
+        time.sleep(1)
+
+        pgDisplay2.fill((255, 255, 255))
+        pgDisplay2.blit(img3, (200, 250))
+        pygame.display.flip()
+        time.sleep(1)
+
+        pgDisplay2.fill((255, 255, 255))
+        pgDisplay2.blit(img2, (200, 250))
+        pygame.display.flip()
+        time.sleep(1)
+
+        pgDisplay2.fill((255, 255, 255))
+        pgDisplay2.blit(img1, (200, 250))
+        pygame.display.flip()
+        time.sleep(1)
         pygame.display.flip()
 
-    def create_button(self):
-        newwindow = Window(pgDisplay1, (10, 10), SCREEN_SIZE)
-        newbutton = Button(newwindow, (150, 250), (100, 50), pygame.Color('Pink'))
-        buttons.append(newbutton)
-        newbutton.draw()
+        ploop = False
 
-
+        pygame.display.flip()
+        clock.tick(15)
+    main_loop()
 
 def game_intro():
+
     intro = True
 
     while intro:
@@ -56,21 +81,53 @@ def game_intro():
                 pygame.quit()
                 quit()
 
+        #Fills the screen and displays the title image
         pgDisplay.fill((255, 255, 255))
         pgDisplay.blit(title, (350, 10))
 
+        #Drawing the Green area for the button
         pygame.draw.rect(pgDisplay, green, (150, 450, 100, 50))
 
         mouse = pygame.mouse.get_pos()
 
-        if  event.type == MOUSEBUTTONUP and 150+100 > mouse[0] > 150 and 450+50 > mouse[1] > 450:
-            pygame.draw.rect(pgDisplay, green, (150, 450, 100, 50))
-            print('Hello')
-            pgDisplay1.fill((125, 125, 125))
+        # Ends the Intro Loop when the mouse is clicked on the green button
 
-        pygame.display.update()
-        #clock.tick(15)
+        if event.type == MOUSEBUTTONDOWN and 150+100 > mouse[0] > 150 and 450+50 > mouse[1] > 450:
+            #pygame.draw.rect(pgDisplay, green, (150, 450, 100, 50))
+            #print('Hello')
+            #pgDisplay1.fill((125, 125, 125))
+            intro = False
 
+        pygame.display.flip()
+        clock.tick(15)
 
+#Main loop
+def main_loop():
+
+    mloop = True
+
+    while mloop:
+        for event in pygame.event.get():
+            print(event)
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+        pgDisplay1.fill((255, 255, 255))
+        pgDisplay1.blit(title, (350, 10))
+        pgDisplay1.blit(startcam, (200, 250))
+
+        #pygame.draw.rect(pgDisplay1,(255, 255, 255),(300, 250, 250, 150))
+
+        mouse = pygame.mouse.get_pos()
+
+        if event.type == MOUSEBUTTONDOWN and 300+250 > mouse[0] > 300 and 250+150 > mouse[1] > 250:
+            print("let's Go!")
+            mloop = False
+            photo_loop()
+
+        pygame.display.flip()
+        clock.tick(15)
 
 game_intro()
+main_loop()

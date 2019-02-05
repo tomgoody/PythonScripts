@@ -6,6 +6,8 @@
         <list>
           <option value="pgame.Rect" />
           <option value="pgame.self" />
+          <option value="pgame.MOUSEBUTTONUP" />
+          <option value="pgame.MOUSEBUTTONDOWN" />
         </list>
       </option>
     </inspection_tool>

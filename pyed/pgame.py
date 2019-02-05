@@ -7,7 +7,7 @@ import random
 pygame.init()
 
 #screen width x height
-SCREEN_SIZE = (800, 600)
+SCREEN_SIZE = (800, 480)
 
 #Initializing screen with no caption
 pgDisplay = pygame.display.set_mode(SCREEN_SIZE, pygame.NOFRAME)
@@ -86,13 +86,13 @@ def game_intro():
         pgDisplay.blit(title, (350, 10))
 
         #Drawing the Green area for the button
-        pygame.draw.rect(pgDisplay, green, (150, 450, 100, 50))
+        pygame.draw.rect(pgDisplay, green, (150, 350, 100, 50))
 
         mouse = pygame.mouse.get_pos()
 
         # Ends the Intro Loop when the mouse is clicked on the green button
 
-        if event.type == MOUSEBUTTONDOWN and 150+100 > mouse[0] > 150 and 450+50 > mouse[1] > 450:
+        if event.type == MOUSEBUTTONDOWN and 150+100 > mouse[0] > 150 and 350+50 > mouse[1] > 350:
             #pygame.draw.rect(pgDisplay, green, (150, 450, 100, 50))
             #print('Hello')
             #pgDisplay1.fill((125, 125, 125))

@@ -3,6 +3,7 @@ import pygame
 from pygame.locals import *
 import time
 import random
+from setup import setup_loop
 
 pygame.init()
 
@@ -17,8 +18,10 @@ clock = pygame.time.Clock()
 buttons = []
 
 #Variables
-myfont = pygame.font.SysFont('Comic Sans MS', 50)
+myfont = pygame.font.SysFont('Arial', 50)
+setupFont = pygame.font.SysFont('Arial', 20)
 title = myfont.render('Photo Booth!', True, (0, 0, 0))
+setup = setupFont.render('Setup', True, (0, 0, 0))
 startcam = myfont.render('Press to Start!', True, (0, 0, 0))
 pose = myfont.render('STRIKE A POSE!', True, (0, 0, 0))
 img3 = myfont.render('3', True, (0, 0, 0))
@@ -84,11 +87,11 @@ def game_intro():
         #Fills the screen and displays the title image
         pgDisplay.fill((255, 255, 255))
         pgDisplay.blit(title, (350, 10))
+        mouse = pygame.mouse.get_pos()
 
         #Drawing the Green area for the button
         pygame.draw.rect(pgDisplay, green, (150, 350, 100, 50))
-
-        mouse = pygame.mouse.get_pos()
+        pgDisplay.blit(setup, (710, 440))
 
         # Ends the Intro Loop when the mouse is clicked on the green button
 
@@ -97,6 +100,13 @@ def game_intro():
             #print('Hello')
             #pgDisplay1.fill((125, 125, 125))
             intro = False
+            time.sleep(.5)
+
+        elif event.type == MOUSEBUTTONDOWN and 690+800 > mouse[0] > 690 and 410+480 > mouse[1] > 410:
+            print("button pressed")
+            #intro = False
+            time.sleep(.5)
+            setup_loop()
 
         pygame.display.flip()
         clock.tick(15)
@@ -105,6 +115,7 @@ def game_intro():
 def main_loop():
 
     mloop = True
+
 
     while mloop:
         for event in pygame.event.get():
@@ -116,15 +127,14 @@ def main_loop():
         pgDisplay1.fill((255, 255, 255))
         pgDisplay1.blit(title, (350, 10))
         pgDisplay1.blit(startcam, (200, 250))
-
-        #pygame.draw.rect(pgDisplay1,(255, 255, 255),(300, 250, 250, 150))
-
         mouse = pygame.mouse.get_pos()
+        #pygame.draw.rect(pgDisplay1,(255, 255, 255),(300, 250, 250, 150))
 
         if event.type == MOUSEBUTTONDOWN and 300+250 > mouse[0] > 300 and 250+150 > mouse[1] > 250:
             print("let's Go!")
             mloop = False
             photo_loop()
+
 
         pygame.display.flip()
         clock.tick(15)
